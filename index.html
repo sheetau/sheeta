@@ -1,0 +1,873 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sheeta Portfolio</title>
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Inter&display=swap");
+      @import url("https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@100..900&display=swap");
+
+      html,
+      body {
+        margin: 0;
+        height: 100%;
+        background: black;
+        color: white;
+        font-family: "Inter", "Noto Sans JP", sans-serif;
+        overflow: hidden;
+      }
+
+      .container {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        height: 100vh;
+        width: 100vw;
+      }
+
+      .left {
+        width: 96px;
+        margin-left: 50px;
+        display: flex;
+        flex-direction: column;
+        align-items: left;
+        gap: 0.5rem;
+        user-select: none;
+      }
+
+      .left span {
+        transition: opacity 0.5s;
+        font-size: 1.4rem;
+        cursor: pointer;
+      }
+
+      .center {
+        position: relative;
+        width: 40%;
+        aspect-ratio: 1 / 1;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        text-align: left;
+        font-size: 0.8rem;
+        line-height: 1.8;
+      }
+
+      #aboutText {
+        opacity: 1;
+        transition: opacity 0.4s ease;
+      }
+
+      .center h1 {
+        font-size: 1.4rem;
+        margin-block: 0;
+        line-height: 1;
+      }
+
+      .lang-toggle {
+        margin: 20px 0;
+        color: white;
+        font-family: inherit;
+      }
+
+      .lang-toggle span {
+        opacity: 0.25;
+      }
+
+      .lang-toggle button {
+        background: none;
+        border: none;
+        padding-inline: 0;
+        color: white;
+        font-size: 1em;
+        font-family: inherit;
+        cursor: pointer;
+        opacity: 0.25;
+        transition: opacity 0.3s;
+      }
+
+      .lang-toggle button:hover {
+        opacity: 0.5;
+      }
+
+      .lang-toggle button.active {
+        opacity: 1;
+      }
+
+      .lang {
+        display: none;
+        color: white;
+        font-family: inherit;
+      }
+
+      .social-links {
+        display: flex;
+        gap: 25px; /* 一定の余白 */
+        margin-top: 40px;
+      }
+
+      .social-links a {
+        display: flex;
+        align-items: center;
+        color: white;
+        text-decoration: none;
+        transition: opacity 0.3s;
+      }
+
+      .social-links a:hover {
+        opacity: 0.25;
+      }
+
+      .social-links svg.icon {
+        margin-left: 5px;
+      }
+
+      .center #aboutText a {
+        color: white;
+        transition: opacity 0.3s;
+        text-underline-offset: 0.15rem;
+      }
+      .center #aboutText a:hover {
+        opacity: 0.5;
+      }
+
+      #workImage {
+        opacity: 1;
+        transition: opacity 0.4s ease;
+      }
+
+      .gap {
+        width: 100px;
+        height: 1px;
+      }
+
+      .number {
+        width: 100px;
+        height: 15px;
+        text-align: center;
+        font-size: 0.8rem;
+        transition: opacity 0.4s ease;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        opacity: 0;
+        cursor: default;
+        user-select: none;
+      }
+
+      .number-current {
+        width: 20px;
+        text-align: left;
+        display: inline-block;
+        position: relative;
+        overflow: hidden;
+        height: 15px;
+      }
+
+      .number-carousel {
+        display: flex;
+        flex-direction: column;
+        transition: transform 0.5s ease;
+        position: absolute;
+        left: 0;
+        top: 0;
+      }
+
+      .number-item {
+        height: 15px;
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+      }
+
+      .number-fixed {
+        opacity: 0.25;
+      }
+
+      .right {
+        width: 96px;
+        margin-right: 50px;
+        height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .thumbs {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        transition: transform 0.5s;
+        position: absolute;
+        top: 0;
+        transform: translateY(50vh);
+      }
+
+      .thumbs img {
+        width: 80px;
+        margin: 10px 0;
+        opacity: 0.5;
+        transition: transform 0.5s, opacity 0.3s;
+        cursor: pointer;
+        user-select: none;
+      }
+
+      .thumbs img.active {
+        opacity: 1;
+        transform: scale(1.2);
+      }
+
+      .center img {
+        max-width: 100%;
+        max-height: 100%;
+        object-fit: contain;
+        user-select: none;
+        cursor: pointer;
+        opacity: 1;
+        transition: opacity 0.3s;
+      }
+
+      .center img:hover {
+        opacity: 0.25 !important;
+      }
+
+      #downArrow {
+        position: fixed;
+        bottom: 50px;
+        left: 50%;
+        transform: translateX(-50%);
+        opacity: 1;
+        cursor: pointer;
+        transition: opacity 0.3s ease;
+        z-index: 1000;
+        cursor: pointer;
+        width: 30px;
+        height: 30px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+      #downArrow:hover {
+        opacity: 0.5 !important;
+      }
+
+      #altTooltip {
+        position: fixed;
+        font-size: 0.8rem;
+        width: 250px;
+        line-height: 1.8;
+        opacity: 0;
+        transition: opacity 0.15s;
+        user-select: none;
+        mix-blend-mode: difference;
+      }
+
+      @media (max-width: 1000px) {
+        .container {
+          flex-direction: column;
+          justify-content: space-between;
+          align-items: center;
+          height: 100vh;
+        }
+
+        .left {
+          flex-direction: row;
+          justify-content: left;
+          margin-left: 0;
+          margin-top: 50px;
+          width: auto;
+          gap: 1rem;
+        }
+
+        .left span {
+          font-size: 0.8rem;
+        }
+
+        .center {
+          max-height: calc(100vh - 130px);
+          width: auto;
+          height: auto;
+          max-width: 80%;
+        }
+
+        .number {
+          opacity: 1;
+          margin-bottom: 50px;
+        }
+
+        .gap,
+        .right {
+          display: none;
+        }
+
+        #altTooltip {
+          display: none;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="left">
+        <span id="aboutLabel" style="opacity: 1">About</span>
+        <span id="worksLabel" style="opacity: 0.25">Works</span>
+      </div>
+      <div class="gap"></div>
+      <div class="center" id="centerContent">
+        <div id="aboutText">
+          <h1>Sheeta</h1>
+          <div class="lang-toggle"><button id="en-btn">EN</button><span> — </span><button id="jp-btn">JP</button></div>
+
+          <p class="lang en">
+            Thank you for visiting my portfolio. My name is Sheeta, and I was born in Tokyo, Japan, in 2001.<br />
+            I mainly work on UI design for websites and develop using HTML, CSS, and JavaScript.<br />
+            This website was also designed and coded by me.<br />
+            In my free time, I enjoy drawing and video editing as hobbies.<br /><br />
+            For work inquiries, please contact me at
+            <a href="mailto:testmail@gmail.com">sheeta.contact@gmail.com</a>.
+          </p>
+
+          <p class="lang jp">
+            ポートフォリオをご覧いただきありがとうございます。しいたです。2001年に東京で生まれました。<br />
+            主にWebサイトのUIデザインや、HTML、CSS、JavaScriptを用いた開発を行っています。<br />
+            このウェブサイトも私がデザイン・コーディングをしました。<br />
+            趣味ではイラストを描いたり、動画編集をしたりしています。<br /><br />
+            お仕事のご依頼は、<a href="mailto:testmail@gmail.com">sheeta.contact@gmail.com</a> までご連絡ください。
+          </p>
+
+          <div class="social-links">
+            <a href="https://linktr.ee/sheetau" target="_blank"
+              >Linktree
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="20"
+                height="20"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                class="icon"
+              >
+                <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                <path d="M12 6h-6a2 2 0 0 0 -2 2v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-6" />
+                <path d="M11 13l9 -9" />
+                <path d="M15 4h5v5" />
+              </svg>
+            </a>
+            <!-- <a href="https://ko-fi.com/sheeta" target="_blank"
+              >Ko-fi
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="20"
+                height="20"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                class="icon"
+              >
+                <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                <path d="M12 6h-6a2 2 0 0 0 -2 2v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-6" />
+                <path d="M11 13l9 -9" />
+                <path d="M15 4h5v5" />
+              </svg>
+            </a>
+            <a href="https://www.youtube.com/@sheetau" target="_blank"
+              >YouTube
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="20"
+                height="20"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                class="icon"
+              >
+                <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                <path d="M12 6h-6a2 2 0 0 0 -2 2v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-6" />
+                <path d="M11 13l9 -9" />
+                <path d="M15 4h5v5" />
+              </svg>
+            </a>
+            <a href="https://x.com/sheetavn" target="_blank"
+              >Twitter
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="20"
+                height="20"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                class="icon"
+              >
+                <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                <path d="M12 6h-6a2 2 0 0 0 -2 2v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-6" />
+                <path d="M11 13l9 -9" />
+                <path d="M15 4h5v5" />
+              </svg>
+            </a>
+            <a href="https://discord.gg/2dXs5HwXuW" target="_blank"
+              >Discord
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="20"
+                height="20"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                class="icon"
+              >
+                <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                <path d="M12 6h-6a2 2 0 0 0 -2 2v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-6" />
+                <path d="M11 13l9 -9" />
+                <path d="M15 4h5v5" />
+              </svg>
+            </a> -->
+            <a href="https://github.com/sheetau" target="_blank"
+              >GitHub
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="20"
+                height="20"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                class="icon"
+              >
+                <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                <path d="M12 6h-6a2 2 0 0 0 -2 2v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-6" />
+                <path d="M11 13l9 -9" />
+                <path d="M15 4h5v5" />
+              </svg>
+            </a>
+          </div>
+        </div>
+      </div>
+      <div class="number" id="numberLabel">
+        <div class="number-current">
+          <div class="number-carousel" id="numberCarousel"></div>
+        </div>
+        <span class="number-fixed" id="numberFixed"></span>
+      </div>
+      <div class="right">
+        <div class="thumbs" id="thumbList">
+          <img
+            src="https://raw.githubusercontent.com/sheetau/monapad/refs/heads/main/screenshots/monapad_ss3.png"
+            data-alt-en="
+              Monapad Text Edtior
+              Personal Work
+              Text editor that uses the same Monaco Editor as VSCode, offering a dark theme, tab support, and lightweight highlight features.
+              https://github.com/sheetau/monapad
+            "
+            data-alt-jp="
+              テキストエディタ「Monapad」
+              Personal Work
+              VSCode と同じ Monaco Editor を使用した、ダークテーマ・タブ機能・簡易的な文字ハイライト機能を備えるテキストエディタ。
+              https://github.com/sheetau/monapad
+            "
+            alt=""
+          />
+          <img
+            src="https://raw.githubusercontent.com/sheetau/cropimage.github.io/main/preview.png"
+            data-alt-en="
+              PFP Cropper
+              Personal Work
+              This website lets you crop images into a square while previewing how your icon will look as a pfp.
+              https://sheetau.github.io/cropimage.github.io/
+            "
+            data-alt-jp="
+              PFP Cropper
+              Personal Work
+              SNSのプロフィール用に、設定時のプレビューを見ながら適切なサイズで画像を正方形に切り抜けるツール。
+              https://sheetau.github.io/cropimage.github.io/
+            "
+            alt=""
+          />
+          <!-- <img
+            src="https://img.youtube.com/vi/aP4jZwemQn4/maxresdefault.jpg"
+            alt="
+              Jinwoo vs Beru Edit/AMV
+              Personal Work
+            "
+          />
+          <img
+            src="https://img.youtube.com/vi/GN6qSgpyAxg/sddefault.jpg"
+            alt="
+              Sukuna vs Mahoraga Edit/AMV
+              Personal Work
+            "
+          /> -->
+        </div>
+      </div>
+    </div>
+    <div id="downArrow" onclick="worksLabel.click()">
+      <svg width="26" height="15" viewBox="0 0 26 15" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M1 1L13 13L25 1" stroke="white" stroke-width="2" />
+      </svg>
+    </div>
+    <div id="altTooltip"></div>
+
+    <script>
+      const aboutLabel = document.getElementById("aboutLabel");
+      const worksLabel = document.getElementById("worksLabel");
+      const center = document.getElementById("centerContent");
+      const thumbList = document.getElementById("thumbList");
+      const thumbs = thumbList.querySelectorAll("img");
+      const numberLabel = document.querySelector(".number");
+      const numberCarousel = document.getElementById("numberCarousel");
+      const numberFixed = document.getElementById("numberFixed");
+      const downArrow = document.getElementById("downArrow");
+
+      let currentIndex = -1;
+      let isAnimating = false;
+      let lastMouseX = 0;
+      let lastMouseY = 0;
+      let hasMouseMoved = false;
+
+      // Initialize number carousel
+      function initNumberCarousel() {
+        numberCarousel.innerHTML = "";
+        const total = String(thumbs.length).padStart(2, "0");
+        numberFixed.innerHTML = `&nbsp;&nbsp;&nbsp;&nbsp;/&nbsp;&nbsp;&nbsp;&nbsp; ${total}`;
+
+        for (let i = 0; i < thumbs.length; i++) {
+          const numberItem = document.createElement("div");
+          numberItem.className = "number-item";
+          const current = String(i + 1).padStart(2, "0");
+          numberItem.innerHTML = `<span style="width:20px; text-align:left; display:inline-block;">${current}</span>`;
+          numberCarousel.appendChild(numberItem);
+        }
+      }
+
+      // update number carousel
+      function updateNumberCarousel(index) {
+        if (index === -1) {
+          numberLabel.style.opacity = "0";
+        } else {
+          numberLabel.style.opacity = "1";
+          const offset = -index * 15; // 15px is the height of each number-item
+          numberCarousel.style.transform = `translateY(${offset}px)`;
+        }
+      }
+
+      // language toggle
+      function setLanguage(lang) {
+        // about text
+        document.querySelectorAll(".lang").forEach((el) => {
+          el.style.display = el.classList.contains(lang) ? "block" : "none";
+        });
+
+        // button
+        document.getElementById("en-btn").classList.toggle("active", lang === "en");
+        document.getElementById("jp-btn").classList.toggle("active", lang === "jp");
+
+        // img alt
+        document.querySelectorAll("img[data-alt-en]").forEach((img) => {
+          img.alt = img.getAttribute(`data-alt-${lang}`);
+        });
+      }
+
+      // img alt tooltip
+      function showAltTooltip(img, forceUpdate = false) {
+        const altTooltip = document.getElementById("altTooltip");
+
+        // hide when about is displayed or no alt is found
+        if (currentIndex === -1 || !img || !img.alt || !img.alt.trim()) {
+          altTooltip.style.opacity = 0;
+          // remove last listener
+          if (window._altTooltipMoveHandler) {
+            window.removeEventListener("mousemove", window._altTooltipMoveHandler);
+            window._altTooltipMoveHandler = null;
+          }
+          return;
+        }
+
+        // split lines
+        const lines = img.alt
+          .trim()
+          .split("\n")
+          .map((s) => s.trim());
+
+        // check if last line is a link
+        const lastLine = lines[lines.length - 1];
+        const isLastLineLink = /^https?:\/\//.test(lastLine);
+
+        // hide link
+        if (isLastLineLink) {
+          lines.pop();
+        }
+
+        // create tooltip
+        const line1 = lines[0] || "";
+        const line2 = lines[1] || "";
+        const rest = lines.slice(2).join(" ");
+
+        altTooltip.innerHTML = `
+          ${line1}<br>
+          <span style="opacity: 0.25">${line2}</span><br><br>
+          ${rest}
+        `;
+
+        // tooltip position
+        function updateTooltipPosition(x, y) {
+          if (currentIndex === -1) {
+            altTooltip.style.opacity = 0;
+            return;
+          }
+
+          if (x > 200 && x < window.innerWidth - 200 && y > 50 && y < window.innerHeight - 50) {
+            altTooltip.style.opacity = 1;
+          } else {
+            altTooltip.style.opacity = 0;
+          }
+          altTooltip.style.left = `${x + 30}px`;
+          altTooltip.style.top = `${y + 30}px`;
+        }
+
+        function moveHandler(e) {
+          lastMouseX = e.clientX;
+          lastMouseY = e.clientY;
+          hasMouseMoved = true;
+          updateTooltipPosition(lastMouseX, lastMouseY);
+        }
+
+        if (window._altTooltipMoveHandler) {
+          window.removeEventListener("mousemove", window._altTooltipMoveHandler);
+        }
+        window._altTooltipMoveHandler = moveHandler;
+        window.addEventListener("mousemove", moveHandler);
+
+        if (forceUpdate && hasMouseMoved) {
+          updateTooltipPosition(lastMouseX, lastMouseY);
+        }
+      }
+
+      // img main view and thumbnail hundling
+      function updateView(index) {
+        if (isAnimating) return;
+
+        const aboutText = document.getElementById("aboutText");
+        const existingImg = document.getElementById("workImage");
+
+        const isAboutToWork = currentIndex === -1 && index >= 0;
+        const isWorkToAbout = currentIndex >= 0 && index === -1;
+        const needsFade = isAboutToWork || isWorkToAbout;
+
+        // Helper: remove current work image
+        const removeWorkImage = () => {
+          if (existingImg) center.removeChild(existingImg);
+        };
+
+        // Helper: create and append new work image
+        const createWorkImage = () => {
+          const img = thumbs[index].cloneNode(true);
+          img.id = "workImage";
+          const w = img.naturalWidth;
+          const h = img.naturalHeight;
+          if (w > h) {
+            img.style.width = "100%";
+            img.style.height = "auto";
+          } else {
+            img.style.height = "100%";
+            img.style.width = "auto";
+          }
+          img.style.display = "block";
+          img.style.opacity = "0";
+          img.style.cursor = "pointer";
+          img.onclick = () => {
+            const urlMatch = img.alt.match(/https?:\/\/[^\s]+/);
+            if (urlMatch) window.open(urlMatch[0], "_blank", "noopener,noreferrer");
+          };
+          center.appendChild(img);
+          return img;
+        };
+
+        // Helper: update label states
+        const updateLabels = () => {
+          aboutLabel.style.opacity = index === -1 ? "1" : "0.25";
+          worksLabel.style.opacity = index === -1 ? "0.25" : "1";
+        };
+
+        // Helper: update thumbnails
+        const updateThumbs = () => {
+          thumbs.forEach((img, i) => {
+            img.classList.toggle("active", i === index);
+          });
+        };
+
+        // Helper: center current thumbnail
+        const centerThumb = () => {
+          if (index >= 0) {
+            const offset = thumbs[index]?.offsetTop ?? 0;
+            const containerHeight = document.querySelector(".right").offsetHeight;
+            const scrollOffset = offset - containerHeight / 2 + thumbs[index].offsetHeight / 2;
+            thumbList.style.transform = `translateY(${-scrollOffset}px)`;
+          } else {
+            thumbList.style.transform = `translateY(50vh)`;
+          }
+        };
+
+        if (needsFade) {
+          isAnimating = true;
+
+          // Fade out current content
+          if (currentIndex === -1) {
+            aboutText.style.opacity = "0";
+            downArrow.style.pointerEvents = "none";
+            downArrow.style.opacity = "0";
+          } else if (existingImg) {
+            existingImg.style.opacity = "0";
+          }
+
+          if (index === -1) {
+            numberLabel.style.opacity = "0";
+          }
+
+          setTimeout(() => {
+            updateLabels();
+            removeWorkImage();
+
+            if (index === -1) {
+              // Show about
+              aboutText.style.display = "block";
+              downArrow.style.display = "flex";
+
+              setTimeout(() => {
+                aboutText.style.opacity = "1";
+                downArrow.style.pointerEvents = "auto";
+                downArrow.style.opacity = "1";
+                isAnimating = false;
+              }, 50);
+
+              showAltTooltip(null);
+            } else {
+              // Show work
+              aboutText.style.display = "none";
+              downArrow.style.display = "none";
+
+              const img = createWorkImage();
+
+              setTimeout(() => {
+                img.style.opacity = "1";
+                isAnimating = false;
+                showAltTooltip(img, true);
+              }, 50);
+            }
+
+            currentIndex = index;
+            updateNumberCarousel(index);
+            updateThumbs();
+            centerThumb();
+          }, 150);
+        } else {
+          updateLabels();
+          removeWorkImage();
+
+          if (index === -1) {
+            aboutText.style.display = "block";
+            downArrow.style.display = "flex";
+            showAltTooltip(null);
+          } else {
+            aboutText.style.display = "none";
+            downArrow.style.display = "none";
+            const img = createWorkImage();
+            img.style.opacity = "1";
+            showAltTooltip(img, true);
+          }
+
+          currentIndex = index;
+          updateNumberCarousel(index);
+          updateThumbs();
+          centerThumb();
+        }
+      }
+
+      // Event listner: wheel
+      window.addEventListener("wheel", (e) => {
+        if (isAnimating) return;
+
+        let newIndex;
+        if (e.deltaY > 0) {
+          newIndex = Math.min(currentIndex + 1, thumbs.length - 1);
+        } else {
+          newIndex = Math.max(currentIndex - 1, -1);
+        }
+
+        if (newIndex !== currentIndex) {
+          updateView(newIndex);
+        }
+      });
+
+      // Event listner: about click
+      aboutLabel.addEventListener("click", () => {
+        if (currentIndex !== -1) {
+          updateView(-1);
+          updateNumberCarousel(0);
+        }
+      });
+
+      // Event listner: work click
+      worksLabel.addEventListener("click", () => {
+        if (currentIndex === -1 || currentIndex !== 0) {
+          updateView(0);
+        }
+      });
+
+      // Event listner: thumbnail click
+      thumbs.forEach((img, i) => {
+        img.addEventListener("click", () => {
+          if (currentIndex !== i) {
+            updateView(i);
+          }
+        });
+      });
+
+      // Event listner: window resize
+      window.addEventListener("resize", () => {
+        updateView(currentIndex);
+      });
+
+      // Event listner: mouse move
+      window.addEventListener("mousemove", (e) => {
+        lastMouseX = e.clientX;
+        lastMouseY = e.clientY;
+        hasMouseMoved = true;
+      });
+
+      // Event listner: initialization
+      window.addEventListener("DOMContentLoaded", () => {
+        // initialize language
+        const browserLang = navigator.language || navigator.userLanguage;
+        const defaultLang = browserLang.startsWith("ja") ? "jp" : "en";
+        setLanguage(defaultLang);
+
+        document.getElementById("en-btn").addEventListener("click", () => setLanguage("en"));
+        document.getElementById("jp-btn").addEventListener("click", () => setLanguage("jp"));
+
+        // Initialize carousel
+        initNumberCarousel();
+        numberLabel.style.opacity = "0";
+        updateView(currentIndex);
+      });
+    </script>
+  </body>
+</html>
