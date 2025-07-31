@@ -224,14 +224,12 @@
         object-fit: cover;
         border: none;
       }
-      #works .block.active {
-        cursor: default;
-      }
-      #works .block:not(.active) {
+      #works .block {
         cursor: pointer;
       }
-      #works .block:not(.active):hover {
+      #works .block:hover {
         outline: 1px solid color-mix(in srgb, var(--color-text-primary), transparent 0%);
+        outline-offset: -1px;
       }
 
       /* main bottom */
@@ -318,7 +316,7 @@
         order: 2;
       }
       .social-link a:hover ~ .left-bar {
-        padding-right: 1.5rem;
+        padding-right: 1rem;
       }
 
       @media (max-width: 480px) {
@@ -575,8 +573,12 @@
           const resolvedImage = image || `https://image.thum.io/get/maxAge/12/width/700/${link}`;
           imgBlock.innerHTML = `<img src="${resolvedImage}" style="${image ? "" : "object-position: top;"}" />`;
           imgBlock.addEventListener("click", () => {
-            index = i;
-            updateMargin();
+            if (index === i) {
+              window.open(link, "_blank");
+            } else {
+              index = i;
+              updateMargin();
+            }
           });
           works.appendChild(imgBlock);
 
