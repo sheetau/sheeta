@@ -465,6 +465,7 @@
       aboutOptionRight.onclick = () => switchLanguage("jp");
 
       // works/about display toggle
+      // ---- fade effect ----
       function fadeSwitch(showElms = [], hideElms = [], afterCallback = () => {}) {
         if (isTransitioning) return;
         isTransitioning = true;
@@ -488,6 +489,7 @@
         }, 300);
       }
 
+      // ---- display toggle ----
       function switchToView(view, trigger = "direct") {
         if (isTransitioning) return;
 
@@ -545,7 +547,7 @@
               lastUpScrollTime = now;
               switchToView("about", "scroll");
             } else {
-              e.preventDefault(); // index = 0 に留まる
+              e.preventDefault();
             }
             return;
           }
