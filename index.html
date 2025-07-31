@@ -4,872 +4,661 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="google-site-verification" content="CbYcYiYRBtqbBzRcFrgow4wD0aZR5AceysXb3puyV5M" />
-    <title>Sheeta's Portfolio</title>
     <link rel="icon" href="icon.png" type="image/x-icon" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Figtree:ital,wght@0,300..900;1,300..900&display=swap"
+      rel="stylesheet"
+    />
+    <link href="https://fonts.googleapis.com/css2?family=M+PLUS+1p&display=swap" rel="stylesheet" />
+    <title>Sheeta's Portfolio</title>
     <style>
-      @import url("https://fonts.googleapis.com/css2?family=Inter&display=swap");
-      @import url("https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@100..900&display=swap");
+      :root {
+        --page-max-width: 500px;
 
-      html,
-      body {
+        --font-size-primary: 1.5rem;
+        --font-size-secondary: 0.9rem;
+        --font-size-tertiary: 0.8rem;
+        --font-size-quaternary: 0.7rem;
+
+        --color-text-primary: #fafafa;
+        --color-text-secondary: #8a8a8a;
+        --color-text-tertiary: #525252;
+
+        --color-bg-primary: #050505;
+
+        --color-border-primary: #313131;
+        --color-border-translucent: #31313180;
+      }
+      * {
         margin: 0;
-        height: 100%;
-        background: black;
-        color: white;
-        font-family: "Inter", "Noto Sans JP", sans-serif;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      *::selection {
+        background-color: var(--color-text-tertiary);
+      }
+      html {
         overflow: hidden;
       }
-
-      .container {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        height: 100vh;
+      body {
+        font-family: "Figtree", "M PLUS 1p", sans-serif;
+        background: var(--color-bg-primary);
+        color: var(--color-text-primary);
         width: 100vw;
-      }
-
-      .left {
-        width: 96px;
-        margin-left: 50px;
-        display: flex;
-        flex-direction: column;
-        align-items: left;
-        gap: 0.5rem;
-        user-select: none;
-      }
-
-      .left span {
-        transition: opacity 0.5s;
-        font-size: 1.4rem;
-        cursor: pointer;
-      }
-
-      .center {
-        position: relative;
-        width: 40%;
-        aspect-ratio: 1 / 1;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        text-align: left;
-        font-size: 0.8rem;
-        line-height: 1.8;
-      }
-
-      #aboutText {
-        opacity: 1;
-        transition: opacity 0.4s ease;
-      }
-
-      .center h1 {
-        font-size: 1.4rem;
-        margin-block: 0;
-        line-height: 1;
-      }
-
-      .lang-toggle {
-        margin: 20px 0;
-        color: white;
-        font-family: inherit;
-      }
-
-      .lang-toggle span {
-        opacity: 0.25;
-      }
-
-      .lang-toggle button {
-        background: none;
-        border: none;
-        padding-inline: 0;
-        color: white;
-        font-size: 1em;
-        font-family: inherit;
-        cursor: pointer;
-        opacity: 0.25;
-        transition: opacity 0.3s;
-      }
-
-      .lang-toggle button:hover {
-        opacity: 0.5;
-      }
-
-      .lang-toggle button.active {
-        opacity: 1;
-      }
-
-      .lang {
-        display: none;
-        color: white;
-        font-family: inherit;
-      }
-
-      .social-links {
-        display: flex;
-        gap: 25px; /* 一定の余白 */
-        margin-top: 40px;
-      }
-
-      .social-links a {
-        display: flex;
-        align-items: center;
-        color: white;
-        text-decoration: none;
-        transition: opacity 0.3s;
-      }
-
-      .social-links a:hover {
-        opacity: 0.25;
-      }
-
-      .social-links svg.icon {
-        margin-left: 5px;
-      }
-
-      .center #aboutText a {
-        color: white;
-        transition: opacity 0.3s;
-        text-underline-offset: 0.15rem;
-      }
-      .center #aboutText a:hover {
-        opacity: 0.5;
-      }
-
-      #workImage {
-        opacity: 1;
-        transition: opacity 0.4s ease;
-      }
-
-      .gap {
-        width: 100px;
-        height: 1px;
-      }
-
-      .number {
-        width: 100px;
-        height: 15px;
-        text-align: center;
-        font-size: 0.8rem;
-        transition: opacity 0.4s ease;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        opacity: 0;
-        cursor: default;
-        user-select: none;
-      }
-
-      .number-current {
-        width: 20px;
-        text-align: left;
-        display: inline-block;
-        position: relative;
+        height: 100vh;
         overflow: hidden;
-        height: 15px;
+        font-size: var(--font-size-quaternary);
+      }
+      a {
+        text-decoration: none;
+        color: inherit;
       }
 
-      .number-carousel {
+      #container {
+        display: flex;
+        flex-direction: row;
+        max-width: var(--page-max-width);
+        width: calc(100% - 10vw);
+        height: 100%;
+        margin: 0 auto;
+      }
+
+      /* side bar */
+      #side-bar {
+        display: flex;
+        justify-content: flex-end;
+        padding-right: min(5vw, 2rem);
+        align-items: center;
+        font-size: var(--font-size-secondary);
+      }
+      #label-wrapper {
         display: flex;
         flex-direction: column;
-        transition: transform 0.5s ease;
+        gap: 2rem;
+      }
+      .side-bar-label {
+        writing-mode: tb-rl;
+        transform: rotate(-180deg);
+        font-weight: 400;
+        color: var(--color-text-tertiary);
+        cursor: pointer;
+        transition: color 0.3s ease;
+        user-select: none;
+      }
+      .side-bar-label.active {
+        color: var(--color-text-primary);
+      }
+      .side-bar-label:not(.active):hover {
+        color: var(--color-text-secondary);
+      }
+
+      /* main */
+      main {
+        height: 100%;
+        min-width: 0;
+        display: flex;
+        flex: 1;
+        flex-direction: column;
+        border-left: 1px solid var(--color-border-translucent);
+      }
+      .main-top,
+      .main-bottom {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+      }
+      .main-top {
+        justify-content: flex-end;
+      }
+      .main-middle {
+        aspect-ratio: 5/3;
+        display: flex;
+        justify-content: center;
+        position: relative;
+        overflow: visible;
+        clip-path: inset(0 -100vw 0 0);
+      }
+      .main-bottom {
+        justify-content: flex-start;
+        overflow: visible;
+        clip-path: inset(0 -100vw 0 0);
+      }
+      #about,
+      #works,
+      #works-description,
+      #works-options,
+      #about-options {
+        opacity: 0;
+        transition: opacity 0.3s ease;
+        pointer-events: none;
+      }
+      #about.show,
+      #works.show,
+      #works-description.show,
+      #works-options.show,
+      #about-options.show {
+        opacity: 1;
+        pointer-events: auto;
+      }
+
+      /* main top */
+      .main-top h1 {
+        font-size: var(--font-size-primary);
+        font-weight: 500;
+        margin-bottom: 4rem;
+        cursor: pointer;
+      }
+      #options {
+        margin-bottom: 3rem;
+        position: relative;
+        cursor: default;
+        height: fit-content;
+      }
+      #works-options {
+        display: flex;
+        position: absolute;
+      }
+      #about-options {
+        position: absolute;
+        display: none;
+      }
+      .option-left,
+      .option-right {
+        display: inline-block;
+        width: 1.3rem;
+        color: var(--color-text-primary);
+        transition: color 0.3s ease;
+      }
+      #about-options .option-left:not(.active):hover,
+      #about-options .option-right:not(.active):hover {
+        color: var(--color-text-secondary);
+        cursor: pointer;
+      }
+      #about-options .option-left:not(.active),
+      #about-options .option-right:not(.active) {
+        color: var(--color-text-tertiary);
+      }
+      #about-options .option-middle {
+        color: var(--color-text-tertiary);
+      }
+      .option-right {
+        text-align: right;
+      }
+
+      /* main middle */
+      #about {
+        display: none;
+        line-height: 1.5;
+        font-size: var(--font-size-tertiary);
+        height: 100%;
+        position: absolute;
+        overflow: hidden;
+      }
+      #about a {
+        text-decoration: underline;
+        transition: color 0.3s ease;
+      }
+      #about a:hover {
+        color: var(--color-text-secondary);
+      }
+      #works {
+        height: 100%;
+        min-width: 100%;
+        display: flex;
         position: absolute;
         left: 0;
-        top: 0;
+      }
+      .block {
+        flex-shrink: 0;
+        height: 100%;
+        width: 100%;
+        margin-right: 1rem;
+        transition: margin 0.3s ease, outline 0.3s ease;
+        will-change: opacity outline;
+        outline: 0 solid color-mix(in srgb, var(--color-text-primary), transparent 100%);
+        outline-offset: -1px;
+      }
+      .block img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        border: none;
+      }
+      #works .block.active {
+        cursor: default;
+      }
+      #works .block:not(.active) {
+        cursor: pointer;
+      }
+      #works .block:not(.active):hover {
+        outline: 1px solid color-mix(in srgb, var(--color-text-primary), transparent 0%);
       }
 
-      .number-item {
-        height: 15px;
+      /* main bottom */
+      #works-description {
+        height: 8rem;
+        min-width: 100%;
         display: flex;
-        align-items: center;
-        justify-content: flex-start;
-      }
-
-      .number-fixed {
-        opacity: 0.25;
-      }
-
-      .right {
-        width: 96px;
-        margin-right: 50px;
-        height: 100vh;
-        display: flex;
-        justify-content: center;
-        align-items: center;
+        left: 0;
         position: relative;
+        color: var(--color-text-secondary);
+        line-height: 1.5;
+      }
+      #works-description .title {
+        display: inline-block;
+        position: relative;
+        margin: 1.2rem 0 0.8rem;
+        font-size: var(--font-size-secondary);
+        color: var(--color-text-primary);
+        max-width: 100%;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        width: fit-content;
+      }
+      #works-description .title a {
         overflow: hidden;
       }
 
-      .thumbs {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        transition: transform 0.5s;
+      #works-description .title a::after {
+        content: "";
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        height: 1px;
+        background-color: var(--color-text-primary);
+        opacity: 0;
+        transition: opacity 0.3s, transform 0.3s;
+        transform: translate3d(-100%, 0, 0);
+      }
+
+      #works-description .title a:hover::after,
+      #works-description .title a:focus::after {
+        opacity: 1;
+        transform: translate3d(0, 0, 0);
+      }
+      #works-description div:not(.title) {
+        overflow: hidden;
+        display: -webkit-box;
+        -webkit-box-orient: vertical;
+        -webkit-line-clamp: 4;
+        text-overflow: ellipsis;
+      }
+
+      .main-bottom {
+        position: relative;
+      }
+      #socials {
         position: absolute;
         top: 0;
-        transform: translateY(50vh);
+        width: fit-content;
+        transition: top 0.3s ease;
+        font-size: var(--font-size-tertiary);
       }
-
-      .thumbs img {
-        width: 80px;
-        margin: 10px 0;
-        opacity: 0.5;
-        transition: transform 0.5s, opacity 0.3s;
-        cursor: pointer;
-        user-select: none;
+      #socials.active {
+        top: 10rem;
       }
-
-      .thumbs img.active {
-        opacity: 1;
-        transform: scale(1.2);
-      }
-
-      .center img {
-        max-width: 100%;
-        max-height: 100%;
-        object-fit: contain;
-        user-select: none;
-        cursor: pointer;
-        opacity: 1;
-        transition: opacity 0.3s;
-      }
-
-      .center img:hover {
-        opacity: 0.25 !important;
-      }
-
-      #downArrow {
-        position: fixed;
-        bottom: 50px;
-        left: 50%;
-        transform: translateX(-50%);
-        opacity: 1;
-        cursor: pointer;
-        transition: opacity 0.3s ease;
-        z-index: 1000;
-        cursor: pointer;
-        width: 30px;
-        height: 30px;
+      .social-link {
         display: flex;
-        justify-content: center;
+        flex-direction: row;
         align-items: center;
+        margin-bottom: 1rem;
       }
-      #downArrow:hover {
-        opacity: 0.5 !important;
+      .left-bar {
+        width: 2.5rem;
+        padding-right: 2rem;
+        height: 1px;
+        background: var(--color-text-primary);
+        background-clip: content-box;
+        transition: padding 0.3s ease;
+        order: 1;
+      }
+      .social-link a {
+        order: 2;
+      }
+      .social-link a:hover ~ .left-bar {
+        padding-right: 1.5rem;
       }
 
-      #altTooltip {
-        position: fixed;
-        font-size: 0.8rem;
-        width: 250px;
-        line-height: 1.8;
-        opacity: 0;
-        transition: opacity 0.15s;
-        user-select: none;
-        mix-blend-mode: difference;
-      }
-
-      @media (max-width: 1000px) {
-        .container {
-          flex-direction: column;
-          justify-content: space-between;
-          align-items: center;
-          height: 100vh;
+      @media (max-width: 480px) {
+        #about {
+          font-size: var(--font-size-quaternary);
+          line-height: 1.3;
         }
-
-        .left {
-          flex-direction: row;
-          justify-content: left;
-          margin-left: 0;
-          margin-top: 50px;
-          width: auto;
-          gap: 1rem;
-        }
-
-        .left span {
-          font-size: 0.8rem;
-        }
-
-        .center {
-          max-height: calc(100vh - 130px);
-          width: auto;
-          height: auto;
-          max-width: 80%;
-        }
-
-        .number {
-          opacity: 1;
-          margin-bottom: 50px;
-        }
-
-        .gap,
-        .right {
-          display: none;
-        }
-
-        #altTooltip {
-          display: none;
+        #socials:not(.active) {
+          top: 2rem;
         }
       }
     </style>
   </head>
   <body>
-    <div class="container">
-      <div class="left">
-        <span id="aboutLabel" style="opacity: 1">About</span>
-        <span id="worksLabel" style="opacity: 0.25">Works</span>
+    <div id="container">
+      <div id="side-bar">
+        <div id="label-wrapper">
+          <span id="aboutLabel" class="side-bar-label">About</span>
+          <span id="worksLabel" class="side-bar-label active">Works</span>
+        </div>
       </div>
-      <div class="gap"></div>
-      <div class="center" id="centerContent">
-        <div id="aboutText">
-          <h1>Sheeta</h1>
-          <div class="lang-toggle"><button id="en-btn">EN</button><span> — </span><button id="jp-btn">JP</button></div>
 
-          <p class="lang en">
-            Thank you for visiting my portfolio. My name is Sheeta, and I was born in Tokyo, Japan, in 2001.<br />
-            I mainly work on UI design for websites and develop using HTML, CSS, and JavaScript.<br />
-            This website was also designed and coded by me.<br />
-            In my free time, I enjoy drawing and video editing as hobbies.<br /><br />
-            For work inquiries, please contact me at
-            <a href="mailto:testmail@gmail.com">sheeta.contact@gmail.com</a>.
-          </p>
-
-          <p class="lang jp">
-            ポートフォリオをご覧いただきありがとうございます。しいたです。2001年に東京で生まれました。<br />
-            主にWebサイトのUIデザインや、HTML、CSS、JavaScriptを用いた開発を行っています。<br />
-            このウェブサイトも私がデザイン・コーディングをしました。<br />
-            趣味ではイラストを描いたり、動画編集をしたりしています。<br /><br />
-            お仕事のご依頼は、<a href="mailto:testmail@gmail.com">sheeta.contact@gmail.com</a> までご連絡ください。
-          </p>
-
-          <div class="social-links">
-            <a href="https://linktr.ee/sheetau" target="_blank"
-              >Linktree
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="20"
-                height="20"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                class="icon"
-              >
-                <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                <path d="M12 6h-6a2 2 0 0 0 -2 2v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-6" />
-                <path d="M11 13l9 -9" />
-                <path d="M15 4h5v5" />
-              </svg>
-            </a>
-            <!-- <a href="https://ko-fi.com/sheeta" target="_blank"
-              >Ko-fi
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="20"
-                height="20"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                class="icon"
-              >
-                <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                <path d="M12 6h-6a2 2 0 0 0 -2 2v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-6" />
-                <path d="M11 13l9 -9" />
-                <path d="M15 4h5v5" />
-              </svg>
-            </a>
-            <a href="https://www.youtube.com/@sheetau" target="_blank"
-              >YouTube
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="20"
-                height="20"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                class="icon"
-              >
-                <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                <path d="M12 6h-6a2 2 0 0 0 -2 2v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-6" />
-                <path d="M11 13l9 -9" />
-                <path d="M15 4h5v5" />
-              </svg>
-            </a>
-            <a href="https://x.com/sheetavn" target="_blank"
-              >Twitter
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="20"
-                height="20"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                class="icon"
-              >
-                <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                <path d="M12 6h-6a2 2 0 0 0 -2 2v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-6" />
-                <path d="M11 13l9 -9" />
-                <path d="M15 4h5v5" />
-              </svg>
-            </a>
-            <a href="https://discord.gg/2dXs5HwXuW" target="_blank"
-              >Discord
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="20"
-                height="20"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                class="icon"
-              >
-                <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                <path d="M12 6h-6a2 2 0 0 0 -2 2v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-6" />
-                <path d="M11 13l9 -9" />
-                <path d="M15 4h5v5" />
-              </svg>
-            </a> -->
-            <a href="https://github.com/sheetau" target="_blank"
-              >GitHub
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="20"
-                height="20"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                class="icon"
-              >
-                <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                <path d="M12 6h-6a2 2 0 0 0 -2 2v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-6" />
-                <path d="M11 13l9 -9" />
-                <path d="M15 4h5v5" />
-              </svg>
-            </a>
+      <main>
+        <div class="main-top">
+          <h1 onclick="location.reload()">Sheeta</h1>
+          <div id="options">
+            <div id="about-options">
+              <span class="option-left">EN</span>
+              <span class="option-middle">—</span>
+              <span class="option-right">JP</span>
+            </div>
+            <div id="works-options" class="show">
+              <span class="option-left"></span>
+              <span class="option-middle">—</span>
+              <span class="option-right"></span>
+            </div>
           </div>
         </div>
-      </div>
-      <div class="number" id="numberLabel">
-        <div class="number-current">
-          <div class="number-carousel" id="numberCarousel"></div>
-        </div>
-        <span class="number-fixed" id="numberFixed"></span>
-      </div>
-      <div class="right">
-        <div class="thumbs" id="thumbList">
-          <img
-            src="https://raw.githubusercontent.com/sheetau/monapad/refs/heads/main/screenshots/monapad_ss_dark.png"
-            data-alt-en="
-              Monapad Text Edtior
-              Personal Work
-              Text editor that uses the same Monaco Editor as VSCode, offering a dark theme, tab support, and lightweight highlight features.
-              https://github.com/sheetau/monapad
-            "
-            data-alt-jp="
-              テキストエディタ「Monapad」
-              Personal Work
-              VSCode と同じ Monaco Editor を使用した、ダークテーマ・タブ機能・簡易的な文字ハイライト機能を備えるテキストエディタ。
-              https://github.com/sheetau/monapad
-            "
-            alt=""
-          />
-          <img
-            src="https://raw.githubusercontent.com/sheetau/cropimage.github.io/main/preview.png"
-            data-alt-en="
-              PFP Cropper
-              Personal Work
-              This website lets you crop images into a square while previewing how your icon will look as a pfp.
-              https://sheetau.github.io/pfpcropper/
-            "
-            data-alt-jp="
-              PFP Cropper
-              Personal Work
-              SNSのプロフィール用に、設定時のプレビューを見ながら適切なサイズで画像を正方形に切り抜けるツール。
-              https://sheetau.github.io/pfpcropper/
-            "
-            alt=""
-          />
-          <!-- <img
-            src="https://img.youtube.com/vi/aP4jZwemQn4/maxresdefault.jpg"
-            alt="
-              Jinwoo vs Beru Edit/AMV
-              Personal Work
-            "
-          />
-          <img
-            src="https://img.youtube.com/vi/GN6qSgpyAxg/sddefault.jpg"
-            alt="
-              Sukuna vs Mahoraga Edit/AMV
-              Personal Work
-            "
-          /> -->
-        </div>
-      </div>
-    </div>
-    <div id="downArrow" onclick="worksLabel.click()">
-      <svg width="26" height="15" viewBox="0 0 26 15" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <path d="M1 1L13 13L25 1" stroke="white" stroke-width="2" />
-      </svg>
-    </div>
-    <div id="altTooltip"></div>
 
+        <div class="main-middle">
+          <div id="about">
+            <p class="lang en">
+              Thank you for visiting my portfolio. My name is Sheeta, and I was born in Tokyo, Japan, in 2001.<br />
+              I mainly work on UI design for websites and develop using HTML, CSS, and JavaScript.<br />
+              This website was also designed and coded by me.<br />
+              In my free time, I enjoy drawing and video editing as hobbies.<br /><br />
+              For work inquiries, please contact me at
+              <a href="mailto:sheeta.contact@gmail.com">sheeta.contact@gmail.com</a>.
+            </p>
+
+            <p class="lang jp">
+              ポートフォリオをご覧いただきありがとうございます。しいたです。2001年東京生まれです。<br />
+              主にWebサイトのUIデザインや、HTML、CSS、JavaScriptを用いた開発を行っています。<br />
+              このウェブサイトも私がデザイン・コーディングをしました。<br />
+              趣味ではイラストを描いたり、動画編集をしたりしています。<br /><br />
+              お仕事のご依頼は、<a href="mailto:sheeta.contact@gmail.com">sheeta.contact@gmail.com</a>
+              までご連絡ください。
+            </p>
+          </div>
+          <div id="works" class="show"></div>
+        </div>
+
+        <div class="main-bottom">
+          <div id="works-description" class="show"></div>
+          <div id="socials" class="active">
+            <div class="social-link">
+              <a href="https://github.com/sheetau" target="_blank">GitHub</a>
+              <div class="left-bar"></div>
+            </div>
+            <div class="social-link">
+              <a href="https://linktr.ee/sheetau" target="_blank">Linktree</a>
+              <div class="left-bar"></div>
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
     <script>
-      const aboutLabel = document.getElementById("aboutLabel");
+      const items = [
+        {
+          image: "https://raw.githubusercontent.com/sheetau/pfpcropper/refs/heads/main/preview.png",
+          link: "https://sheetau.github.io/pfpcropper/",
+        },
+        {
+          image: "https://raw.githubusercontent.com/sheetau/monapad/refs/heads/main/screenshots/monapad_ss_onyx.png",
+          link: "https://github.com/sheetau/monapad",
+        },
+        { image: "", link: "https://sheetau.github.io/monapad/" },
+      ];
+
+      const works = document.querySelector("#works");
+      const about = document.querySelector("#about");
+      const socials = document.querySelector("#socials");
       const worksLabel = document.getElementById("worksLabel");
-      const center = document.getElementById("centerContent");
-      const thumbList = document.getElementById("thumbList");
-      const thumbs = thumbList.querySelectorAll("img");
-      const numberLabel = document.querySelector(".number");
-      const numberCarousel = document.getElementById("numberCarousel");
-      const numberFixed = document.getElementById("numberFixed");
-      const downArrow = document.getElementById("downArrow");
+      const aboutLabel = document.getElementById("aboutLabel");
+      const descriptions = document.querySelector("#works-description");
+      const worksOptions = document.getElementById("works-options");
+      const worksOptionLeft = document.querySelector("#works-options .option-left");
+      const worksOptionRight = document.querySelector("#works-options .option-right");
+      const aboutOptions = document.getElementById("about-options");
+      const aboutOptionLeft = document.querySelector("#about-options .option-left");
+      const aboutOptionRight = document.querySelector("#about-options .option-right");
+      const mainMiddle = document.querySelector(".main-middle");
+      const labelWrapper = document.getElementById("label-wrapper");
 
-      let currentIndex = -1;
-      let isAnimating = false;
-      let lastMouseX = 0;
-      let lastMouseY = 0;
-      let hasMouseMoved = false;
+      let index = 0;
+      let isAboutShown = false;
+      let isTransitioning = false;
+      const total = items.length;
+      const blockWidth = works.clientWidth;
+      let lastUpScrollTime = 0;
 
-      // Initialize number carousel
-      function initNumberCarousel() {
-        numberCarousel.innerHTML = "";
-        const total = String(thumbs.length).padStart(2, "0");
-        numberFixed.innerHTML = `&nbsp;&nbsp;&nbsp;&nbsp;/&nbsp;&nbsp;&nbsp;&nbsp; ${total}`;
+      // mobile swipe
+      let touchStartX = 0;
+      let touchEndX = 0;
+      const swipeTargets = [mainMiddle, descriptions];
 
-        for (let i = 0; i < thumbs.length; i++) {
-          const numberItem = document.createElement("div");
-          numberItem.className = "number-item";
-          const current = String(i + 1).padStart(2, "0");
-          numberItem.innerHTML = `<span style="width:20px; text-align:left; display:inline-block;">${current}</span>`;
-          numberCarousel.appendChild(numberItem);
-        }
-      }
+      // language
+      let currentLang = navigator.language.startsWith("ja") ? "jp" : "en";
+      const langElements = document.querySelectorAll(".lang");
+      langElements.forEach((el) => {
+        el.style.display = el.classList.contains(currentLang) ? "block" : "none";
+      });
 
-      // update number carousel
-      function updateNumberCarousel(index) {
-        if (index === -1) {
-          numberLabel.style.opacity = "0";
-        } else {
-          numberLabel.style.opacity = "1";
-          const offset = -index * 15; // 15px is the height of each number-item
-          numberCarousel.style.transform = `translateY(${offset}px)`;
-        }
-      }
+      function switchLanguage(lang) {
+        if (currentLang === lang && aboutOptions.classList.contains("active")) return;
 
-      // language toggle
-      function setLanguage(lang) {
-        // about text
-        document.querySelectorAll(".lang").forEach((el) => {
-          el.style.display = el.classList.contains(lang) ? "block" : "none";
-        });
+        currentLang = lang;
+        const langElements = document.querySelectorAll(".lang");
 
-        // button
-        document.getElementById("en-btn").classList.toggle("active", lang === "en");
-        document.getElementById("jp-btn").classList.toggle("active", lang === "jp");
-
-        // img alt
-        document.querySelectorAll("img[data-alt-en]").forEach((img) => {
-          img.alt = img.getAttribute(`data-alt-${lang}`);
-        });
-      }
-
-      // img alt tooltip
-      function showAltTooltip(img, forceUpdate = false) {
-        const altTooltip = document.getElementById("altTooltip");
-
-        // hide when about is displayed or no alt is found
-        if (currentIndex === -1 || !img || !img.alt || !img.alt.trim()) {
-          altTooltip.style.opacity = 0;
-          // remove last listener
-          if (window._altTooltipMoveHandler) {
-            window.removeEventListener("mousemove", window._altTooltipMoveHandler);
-            window._altTooltipMoveHandler = null;
+        langElements.forEach((el) => {
+          if (el.classList.contains(lang)) {
+            el.style.display = "block";
+          } else {
+            el.style.display = "none";
           }
-          return;
+        });
+
+        aboutOptionLeft.classList.toggle("active", lang === "en");
+        aboutOptionRight.classList.toggle("active", lang === "jp");
+      }
+      switchLanguage(currentLang);
+      aboutOptionLeft.onclick = () => switchLanguage("en");
+      aboutOptionRight.onclick = () => switchLanguage("jp");
+
+      // works/about display toggle
+      function fadeSwitch(showElms = [], hideElms = [], afterCallback = () => {}) {
+        if (isTransitioning) return;
+        isTransitioning = true;
+
+        hideElms.forEach((el) => {
+          el.classList.remove("show");
+          setTimeout(() => {
+            el.style.display = "none";
+          }, 300);
+        });
+
+        showElms.forEach((el) => {
+          el.style.display = "flex";
+          void el.offsetWidth;
+          el.classList.add("show");
+        });
+
+        setTimeout(() => {
+          afterCallback();
+          isTransitioning = false;
+        }, 300);
+      }
+
+      function switchToView(view, trigger = "direct") {
+        if (isTransitioning) return;
+
+        const isAlreadyActive =
+          view === "works" ? worksLabel.classList.contains("active") : aboutLabel.classList.contains("active");
+
+        if (view === "works") {
+          if (isAlreadyActive && index === 0 && trigger !== "scroll") return;
+
+          worksLabel.classList.add("active");
+          aboutLabel.classList.remove("active");
+          socials.classList.add("active");
+          isAboutShown = false;
+
+          if (isAlreadyActive && trigger !== "scroll") {
+            index = 0;
+            updateMargin();
+          }
+
+          fadeSwitch([works, descriptions, worksOptions], [about, aboutOptions]);
+        } else if (view === "about") {
+          if (isAlreadyActive) return;
+
+          aboutLabel.classList.add("active");
+          worksLabel.classList.remove("active");
+          socials.classList.remove("active");
+          isAboutShown = true;
+
+          fadeSwitch([about, aboutOptions], [works, descriptions, worksOptions]);
+          setTimeout(() => {
+            index = 0;
+            updateMargin();
+          }, 300);
         }
+      }
 
-        // split lines
-        const lines = img.alt
-          .trim()
-          .split("\n")
-          .map((s) => s.trim());
+      // ---- Click Handlers ----
+      aboutLabel.addEventListener("click", () => switchToView("about"));
+      worksLabel.addEventListener("click", () => switchToView("works"));
 
-        // check if last line is a link
-        const lastLine = lines[lines.length - 1];
-        const isLastLineLink = /^https?:\/\//.test(lastLine);
+      // ---- Scroll Handler ----
+      window.addEventListener(
+        "wheel",
+        (e) => {
+          if (e.ctrlKey || e.deltaY === 0) return;
 
-        // hide link
-        if (isLastLineLink) {
-          lines.pop();
-        }
-
-        // create tooltip
-        const line1 = lines[0] || "";
-        const line2 = lines[1] || "";
-        const rest = lines.slice(2).join(" ");
-
-        altTooltip.innerHTML = `
-          ${line1}<br>
-          <span style="opacity: 0.25">${line2}</span><br><br>
-          ${rest}
-        `;
-
-        // tooltip position
-        function updateTooltipPosition(x, y) {
-          if (currentIndex === -1) {
-            altTooltip.style.opacity = 0;
+          if (isAboutShown && e.deltaY > 0) {
+            switchToView("works", "scroll");
             return;
           }
 
-          if (x > 200 && x < window.innerWidth - 200 && y > 50 && y < window.innerHeight - 50) {
-            altTooltip.style.opacity = 1;
-          } else {
-            altTooltip.style.opacity = 0;
-          }
-          altTooltip.style.left = `${x + 30}px`;
-          altTooltip.style.top = `${y + 30}px`;
-        }
-
-        function moveHandler(e) {
-          lastMouseX = e.clientX;
-          lastMouseY = e.clientY;
-          hasMouseMoved = true;
-          updateTooltipPosition(lastMouseX, lastMouseY);
-        }
-
-        if (window._altTooltipMoveHandler) {
-          window.removeEventListener("mousemove", window._altTooltipMoveHandler);
-        }
-        window._altTooltipMoveHandler = moveHandler;
-        window.addEventListener("mousemove", moveHandler);
-
-        if (forceUpdate && hasMouseMoved) {
-          updateTooltipPosition(lastMouseX, lastMouseY);
-        }
-      }
-
-      // img main view and thumbnail hundling
-      function updateView(index) {
-        if (isAnimating) return;
-
-        const aboutText = document.getElementById("aboutText");
-        const existingImg = document.getElementById("workImage");
-
-        const isAboutToWork = currentIndex === -1 && index >= 0;
-        const isWorkToAbout = currentIndex >= 0 && index === -1;
-        const needsFade = isAboutToWork || isWorkToAbout;
-
-        // Helper: remove current work image
-        const removeWorkImage = () => {
-          if (existingImg) center.removeChild(existingImg);
-        };
-
-        // Helper: create and append new work image
-        const createWorkImage = () => {
-          const img = thumbs[index].cloneNode(true);
-          img.id = "workImage";
-          const w = img.naturalWidth;
-          const h = img.naturalHeight;
-          if (w > h) {
-            img.style.width = "100%";
-            img.style.height = "auto";
-          } else {
-            img.style.height = "100%";
-            img.style.width = "auto";
-          }
-          img.style.display = "block";
-          img.style.opacity = "0";
-          img.style.cursor = "pointer";
-          img.onclick = () => {
-            const urlMatch = img.alt.match(/https?:\/\/[^\s]+/);
-            if (urlMatch) window.open(urlMatch[0], "_blank", "noopener,noreferrer");
-          };
-          center.appendChild(img);
-          return img;
-        };
-
-        // Helper: update label states
-        const updateLabels = () => {
-          aboutLabel.style.opacity = index === -1 ? "1" : "0.25";
-          worksLabel.style.opacity = index === -1 ? "0.25" : "1";
-        };
-
-        // Helper: update thumbnails
-        const updateThumbs = () => {
-          thumbs.forEach((img, i) => {
-            img.classList.toggle("active", i === index);
-          });
-        };
-
-        // Helper: center current thumbnail
-        const centerThumb = () => {
-          if (index >= 0) {
-            const offset = thumbs[index]?.offsetTop ?? 0;
-            const containerHeight = document.querySelector(".right").offsetHeight;
-            const scrollOffset = offset - containerHeight / 2 + thumbs[index].offsetHeight / 2;
-            thumbList.style.transform = `translateY(${-scrollOffset}px)`;
-          } else {
-            thumbList.style.transform = `translateY(50vh)`;
-          }
-        };
-
-        if (needsFade) {
-          isAnimating = true;
-
-          // Fade out current content
-          if (currentIndex === -1) {
-            aboutText.style.opacity = "0";
-            downArrow.style.pointerEvents = "none";
-            downArrow.style.opacity = "0";
-          } else if (existingImg) {
-            existingImg.style.opacity = "0";
-          }
-
-          if (index === -1) {
-            numberLabel.style.opacity = "0";
-          }
-
-          setTimeout(() => {
-            updateLabels();
-            removeWorkImage();
-
-            if (index === -1) {
-              // Show about
-              aboutText.style.display = "block";
-              downArrow.style.display = "flex";
-
-              setTimeout(() => {
-                aboutText.style.opacity = "1";
-                downArrow.style.pointerEvents = "auto";
-                downArrow.style.opacity = "1";
-                isAnimating = false;
-              }, 50);
-
-              showAltTooltip(null);
+          if (!isAboutShown && index === 0 && e.deltaY < 0) {
+            const now = Date.now();
+            if (now - lastUpScrollTime > 500) {
+              lastUpScrollTime = now;
+              switchToView("about", "scroll");
             } else {
-              // Show work
-              aboutText.style.display = "none";
-              downArrow.style.display = "none";
-
-              const img = createWorkImage();
-
-              setTimeout(() => {
-                img.style.opacity = "1";
-                isAnimating = false;
-                showAltTooltip(img, true);
-              }, 50);
+              e.preventDefault(); // index = 0 に留まる
             }
-
-            currentIndex = index;
-            updateNumberCarousel(index);
-            updateThumbs();
-            centerThumb();
-          }, 150);
-        } else {
-          updateLabels();
-          removeWorkImage();
-
-          if (index === -1) {
-            aboutText.style.display = "block";
-            downArrow.style.display = "flex";
-            showAltTooltip(null);
-          } else {
-            aboutText.style.display = "none";
-            downArrow.style.display = "none";
-            const img = createWorkImage();
-            img.style.opacity = "1";
-            showAltTooltip(img, true);
+            return;
           }
 
-          currentIndex = index;
-          updateNumberCarousel(index);
-          updateThumbs();
-          centerThumb();
-        }
+          if (e.deltaY < 0) {
+            lastUpScrollTime = Date.now();
+          }
+
+          e.preventDefault();
+          index += e.deltaY > 0 ? 1 : -1;
+          index = clamp(index, 0, total - 1);
+          updateMargin();
+        },
+        { passive: false }
+      );
+
+      // generate block
+      items
+        .slice()
+        .reverse()
+        .forEach(({ image, link }, i, arr) => {
+          const imgBlock = document.createElement("div");
+          imgBlock.className = "block";
+          if (i === index) imgBlock.classList.add("active");
+          const resolvedImage = image || `https://image.thum.io/get/maxAge/12/width/700/${link}`;
+          imgBlock.innerHTML = `<img src="${resolvedImage}" style="${image ? "" : "object-position: top;"}" />`;
+          imgBlock.addEventListener("click", () => {
+            index = i;
+            updateMargin();
+          });
+          works.appendChild(imgBlock);
+
+          const descBlock = document.createElement("div");
+          descBlock.className = "block";
+          descBlock.innerHTML = `<span class="title">Loading...</span>`;
+          descriptions.appendChild(descBlock);
+
+          const proxyUrl = "https://api.allorigins.win/raw?url=" + encodeURIComponent(link);
+          fetchWithRetry(proxyUrl)
+            .then((html) => {
+              if (!html) {
+                console.warn(`❌ Failed to fetch metadata (final result is null): ${link}`);
+                descBlock.innerHTML = `<span class="title">Failed to load metadata</span>`;
+                return;
+              }
+              const parser = new DOMParser();
+              const doc = parser.parseFromString(html, "text/html");
+              const title = doc.querySelector("title")?.textContent || "(no title)";
+              const meta =
+                doc.querySelector('meta[name="description"]')?.getAttribute("content") ||
+                doc.querySelector('meta[property="og:description"]')?.getAttribute("content") ||
+                doc.querySelector("p")?.textContent?.trim() ||
+                "(no description)";
+              descBlock.innerHTML = `<div class="title"><a href="${link}" target="_blank">${title}</a></div><div>${meta}</div>`;
+            })
+            .catch((err) => {
+              console.error(`❌ Completely failed: ${link}`, err);
+              descBlock.innerHTML = `<span class="title">Failed to load metadata</span>`;
+            });
+        });
+
+      function fetchWithRetry(url, retries = 5, delay = 1000) {
+        return fetch(url)
+          .then((res) => {
+            if (!res.ok) throw new Error(`Fetch failed with status ${res.status}`);
+            return res.text();
+          })
+          .catch((err) => {
+            if (retries <= 0) {
+              console.warn("❌ All retries failed:", err.message);
+              return null;
+            }
+            console.warn(`⚠️ Fetch failed: ${err.message}. Retrying... ${retries} retries left`);
+            return new Promise((resolve) => setTimeout(() => resolve(fetchWithRetry(url, retries - 1, delay)), delay));
+          });
       }
 
-      // Event listner: wheel
-      window.addEventListener("wheel", (e) => {
-        if (isAnimating) return;
+      worksOptionRight.textContent = ("00" + total).slice(-2);
+      worksOptionLeft.textContent = ("00" + (index + 1)).slice(-2);
 
-        let newIndex;
-        if (e.deltaY > 0) {
-          newIndex = Math.min(currentIndex + 1, thumbs.length - 1);
-        } else {
-          newIndex = Math.max(currentIndex - 1, -1);
-        }
-
-        if (newIndex !== currentIndex) {
-          updateView(newIndex);
-        }
-      });
-
-      // Event listner: about click
-      aboutLabel.addEventListener("click", () => {
-        if (currentIndex !== -1) {
-          updateView(-1);
-          updateNumberCarousel(0);
-        }
-      });
-
-      // Event listner: work click
-      worksLabel.addEventListener("click", () => {
-        if (currentIndex === -1 || currentIndex !== 0) {
-          updateView(0);
-        }
-      });
-
-      // Event listner: thumbnail click
-      thumbs.forEach((img, i) => {
-        img.addEventListener("click", () => {
-          if (currentIndex !== i) {
-            updateView(i);
-          }
+      function updateMargin() {
+        const offset = `calc(-${index} * (100% + 1rem))`;
+        works.querySelector(".block")?.style.setProperty("margin-left", offset);
+        descriptions.querySelector(".block")?.style.setProperty("margin-left", offset);
+        worksOptionLeft.textContent = ("00" + (index + 1)).slice(-2);
+        works.querySelectorAll(".block").forEach((el, i) => {
+          el.classList.toggle("active", i === index);
         });
+      }
+
+      function clamp(val, min, max) {
+        return Math.max(min, Math.min(max, val));
+      }
+
+      function handleSwipe() {
+        const dx = touchEndX - touchStartX;
+        const threshold = 25; // minimum swipe distance
+
+        if (Math.abs(dx) < threshold || isAboutShown) return;
+
+        if (dx > 0) {
+          index = clamp(index - 1, 0, total - 1);
+        } else {
+          index = clamp(index + 1, 0, total - 1);
+        }
+        updateMargin();
+      }
+
+      // update labelWrapper height on resize
+      window.addEventListener("resize", function () {
+        labelWrapper.style.height = mainMiddle.clientHeight + "px";
       });
-
-      // Event listner: window resize
-      window.addEventListener("resize", () => {
-        updateView(currentIndex);
-      });
-
-      // Event listner: mouse move
-      window.addEventListener("mousemove", (e) => {
-        lastMouseX = e.clientX;
-        lastMouseY = e.clientY;
-        hasMouseMoved = true;
-      });
-
-      // Event listner: initialization
-      window.addEventListener("DOMContentLoaded", () => {
-        // initialize language
-        const browserLang = navigator.language || navigator.userLanguage;
-        const defaultLang = browserLang.startsWith("ja") ? "jp" : "en";
-        setLanguage(defaultLang);
-
-        document.getElementById("en-btn").addEventListener("click", () => setLanguage("en"));
-        document.getElementById("jp-btn").addEventListener("click", () => setLanguage("jp"));
-
-        // Initialize carousel
-        initNumberCarousel();
-        numberLabel.style.opacity = "0";
-        updateView(currentIndex);
-      });
+      labelWrapper.style.height = mainMiddle.clientHeight + "px";
     </script>
   </body>
 </html>
