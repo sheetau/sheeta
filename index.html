@@ -562,6 +562,39 @@
         { passive: false }
       );
 
+      function clamp(val, min, max) {
+        return Math.max(min, Math.min(max, val));
+      }
+
+      for (const el of swipeTargets) {
+        if (!el) continue;
+
+        el.addEventListener("touchstart", (e) => {
+          if (e.touches.length > 1) return;
+          touchStartX = e.touches[0].clientX;
+        });
+
+        el.addEventListener("touchend", (e) => {
+          if (e.changedTouches.length > 1) return;
+          touchEndX = e.changedTouches[0].clientX;
+          handleSwipe();
+        });
+      }
+
+      function handleSwipe() {
+        const dx = touchEndX - touchStartX;
+        const threshold = 25; // minimum swipe distance
+
+        if (Math.abs(dx) < threshold || isAboutShown) return;
+
+        if (dx > 0) {
+          index = clamp(index - 1, 0, total - 1);
+        } else {
+          index = clamp(index + 1, 0, total - 1);
+        }
+        updateMargin();
+      }
+
       // generate block
       items
         .slice()
@@ -638,24 +671,6 @@
         works.querySelectorAll(".block").forEach((el, i) => {
           el.classList.toggle("active", i === index);
         });
-      }
-
-      function clamp(val, min, max) {
-        return Math.max(min, Math.min(max, val));
-      }
-
-      function handleSwipe() {
-        const dx = touchEndX - touchStartX;
-        const threshold = 25; // minimum swipe distance
-
-        if (Math.abs(dx) < threshold || isAboutShown) return;
-
-        if (dx > 0) {
-          index = clamp(index - 1, 0, total - 1);
-        } else {
-          index = clamp(index + 1, 0, total - 1);
-        }
-        updateMargin();
       }
 
       // update labelWrapper height on resize
